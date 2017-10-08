@@ -17,7 +17,7 @@ DATA_SET_CSV = DATA_SET_DIR + "dataset.csv"
 FILE_NAME = "dataset.zip"
 
 def download_zip(url) :
-    print('Download files...')
+    print('Downloading files...')
     urllib.request.urlretrieve(url, "dataset.zip")
     # check if directory exists
     if not os.path.exists(DATA_SET_DIR):
@@ -37,6 +37,7 @@ def download_zip(url) :
         create_csv()
 
 def create_csv():
+    print('Creating csv...')
     with open(DATA_SET_CSV, 'w') as csvfile:
         filewriter = csv.writer(csvfile, delimiter='|')
         filewriter.writerow(['Source', 'Sentence', 'Score'])

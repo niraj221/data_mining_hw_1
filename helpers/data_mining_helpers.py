@@ -12,6 +12,10 @@ W - words
 l - letter
 """
 
+from collections import Counter
+from copy import deepcopy
+import random
+
 def format_rows(docs):
     """ format the text field and strip special characters """
     D = []
@@ -24,14 +28,6 @@ def format_labels(target, docs):
     """ format the labels """
     return docs.target_names[target]
 
-def check_missing_values(row):
-    """ functions that check and verifies if there are missing values in dataframe """
-    counter = 0
-    for element in row:
-        if element == True:
-            counter+=1
-    return ("The amoung of missing records is: ", counter)
-
 def tokenize_text(text, remove_stopwords=False):
     """
     Tokenize text using the nltk library
@@ -42,3 +38,23 @@ def tokenize_text(text, remove_stopwords=False):
             # filters here
             tokens.append(word)
     return tokens
+
+
+"""check_missing_values && add_dummy_data: Helpers for datasets"""
+__author__      = "Abner Tellez"
+__copyright__   = "Copyright 2017, NTHU"
+
+def check_missing_values(row): 
+    return "The amoung of missing records is: ", Counter(row)[True] # Better way to count and check missing values, using Counter library
+
+def add_dummy_data(dummy_data, n, random_missing_values = False) : 
+    dummy_list = []
+    for x in range(0, n):
+        dummy_value = deepcopy(dummy_data)
+        if (random_missing_values):
+            dummy_value.pop(random.choice(list(dummy_data.keys())), None) 
+        dummy_list.append(dummy_value)
+    return dummy_list
+
+
+
