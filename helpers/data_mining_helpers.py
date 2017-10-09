@@ -14,7 +14,13 @@ l - letter
 
 from collections import Counter
 from copy import deepcopy
+from nltk.corpus import stopwords
+from nltk.tokenize import TweetTokenizer
 import random
+
+stopWords = stopwords.words('english')
+tknzr = TweetTokenizer(strip_handles=True, reduce_len=True) # Casual language tokenizer
+
 
 def format_rows(docs):
     """ format the text field and strip special characters """
@@ -28,20 +34,9 @@ def format_labels(target, docs):
     """ format the labels """
     return docs.target_names[target]
 
-def tokenize_text(text, remove_stopwords=False):
-    """
-    Tokenize text using the nltk library
-    """
-    tokens = []
-    for d in nltk.sent_tokenize(text, language='english'):
-        for word in nltk.word_tokenize(d, language='english'):
-            # filters here
-            tokens.append(word)
-    return tokens
-
-
 """check_missing_values && add_dummy_data: Helpers for datasets"""
-__author__      = "Abner Tellez"
+__author__      = "Elvis Saravia"
+__modifier      = "Abner Tellez"
 __copyright__   = "Copyright 2017, NTHU"
 
 def check_missing_values(row): 
@@ -55,6 +50,17 @@ def add_dummy_data(dummy_data, n, random_missing_values = False) :
             dummy_value.pop(random.choice(list(dummy_data.keys())), None) 
         dummy_list.append(dummy_value)
     return dummy_list
+
+"""
+    Tokenize text using the nltk library
+"""
+def tokenize_text(text, remove_stopwords = False):
+    tokens = []
+    for d in nltk.sent_tokenize(text, language='english'):
+        for word in tknzr.tokenize(d):
+            if (word not in stopWords or not remove_stopwords): # Filter stop words using parameter
+                tokens.append(word)
+    return tokens
 
 
 

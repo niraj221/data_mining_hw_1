@@ -100,8 +100,8 @@ def get_trace(X_pca, data, category, color):
     )
     return trace
 
+""" Generate word cloud given some input text doc """
 def plot_word_cloud(text):
-    """ Generate word cloud given some input text doc """
     word_cloud = WordCloud().generate(text)
     plt.figure(figsize=(8,6), dpi=90)
     plt.imshow(word_cloud, interpolation='bilinear')
