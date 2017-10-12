@@ -62,5 +62,12 @@ def tokenize_text(text, remove_stopwords = False):
                 tokens.append(word)
     return tokens
 
+def reduce_words(words, relevant_number = 5) :
+    new_words = []
+    for d in words:
+        if (d[0] not in stopWords and d[1] >= relevant_number):
+            new_words.append(d)
+    return new_words
+
 
 
